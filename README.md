@@ -1,13 +1,8 @@
-# canrevan
+# can't-revan
 
-[![PyPI version](https://badge.fury.io/py/canrevan.svg)](https://badge.fury.io/py/canrevan)
-![build](https://github.com/affjljoo3581/canrevan/workflows/build/badge.svg)
-[![GitHub license](https://img.shields.io/github/license/affjljoo3581/canrevan)](https://github.com/affjljoo3581/canrevan/blob/master/LICENSE)
-[![codecov](https://codecov.io/gh/affjljoo3581/canrevan/branch/master/graph/badge.svg)](https://codecov.io/gh/affjljoo3581/canrevan)
-[![CodeFactor](https://www.codefactor.io/repository/github/affjljoo3581/canrevan/badge)](https://www.codefactor.io/repository/github/affjljoo3581/canrevan)
 
 ## Introduction
-`canrevan`은 대량의 네이버 뉴스 기사를 수집하는 라이브러리입니다. 간단하게 한국어 뉴스
+`can't-revan`은 대량의 네이버 뉴스 기사를 수집하는 라이브러리였던 canrevan의 포크 입니다. 간단하게 한국어 뉴스
 데이터셋을 구성하도록 도와줍니다.
 
 NLP task에서 가장 중요한 부분 중 하나는 데이터셋입니다. 특히 한국어의 경우, 영어에 비해
@@ -33,7 +28,7 @@ NLP task에서 가장 중요한 부분 중 하나는 데이터셋입니다. 특�
 플랫폼에서 다양한 언론사의 방대한 뉴스 기사를 수집할 수 있습니다. 실제로 많은 연구자들이
 네이버 뉴스를 통해 기사를 수집합니다.
 
-`canrevan`은 네이버 뉴스에서 기사를 수집하도록 도와줍니다. 명령창에서 한 줄로 수
+`can't-revan`은 네이버 뉴스에서 기사를 수집하도록 도와줍니다. 명령창에서 한 줄로 수
 기가바이트의 데이터를 손쉽게 수집할 수 있습니다. 자세한 내용은 [여기](#Example)를
 참고하시기 바랍니다.
 
@@ -45,17 +40,12 @@ NLP task에서 가장 중요한 부분 중 하나는 데이터셋입니다. 특�
 * langumo
 
 ## Installation
-### With pip
-PyPI에서 canrevan을 설치할 수 있습니다. 자세한 명령어는 다음과 같습니다.
-```console
-$ pip install canrevan
-```
 
 ### From source
 혹은, 원격 저장소에서 복제하여 소스코드에서 직접 설치할 수 있습니다.
 ```console
-$ git clone https://github.com/affjljoo3581/canrevan.git
-$ cd canrevan
+$ git clone https://github.com/yeorinhieut/cant-revan.git
+$ cd cant-revan
 $ python setup.py install
 ```
 
@@ -74,11 +64,11 @@ $ canrevan --category 100 101 --start_date 20200501 --end_date 20200531 --max_pa
 ```
 
 ## Format
-`canrevan`은 수집된 뉴스 기사를 `json.encoder.encode_basestring`으로 인코딩합니다.
+`cant-revan`은 수집된 뉴스 기사를 `json.encoder.encode_basestring`으로 인코딩합니다.
 
     "국방부는 18일부터 입대하는 모든 장정의 검체를 채취할 예정이며, 8주간 매주 6,300여명이 코로나19 검사를 받는다고 18일 밝혔다.\n군이 훈련소에서 자체적으로 검체를 채취하고, 질병관리본부와 계약을 맺은 민간 업체 등이 검체 이송과 검사를 담당한다. 대규모 인원의 빠른 검사를 위해 취합검사법(Pooling)이 활용된다.\n군 관계자는 “이태원 클럽 등으로 인해 코로나19 20대 감염 사례가 늘었다”며 “집단 생활하는 훈련병이 뒤늦게 코로나19 확진을 받으면 집단 감염이 발생할 수 있기 때문에 선제적으로 전원 검사를 시행한다”고 설명했다.\n군은 확진자가 나온 지역에서 입소하거나 확진자와 동선이 겹칠 경우에 예방적 격리와 검사를 시행했었다.\n현재까지 이태원 일대를 방문했다고 부대에 알린 훈련병 83명이 코로나19 검사를 받았고, 전원 음성 판정이 나왔다.\n훈련병이 입소 후 일주일 전 확진 판정을 받으면 귀가 조치되고, 일주일이 넘은 뒤 확진을 받으면 군 소속으로 치료를 받게 된다.\n앞서 지난달 13일 육군훈련소에 입소한 3명이 코로나19 확진 판정을 받아 귀가 조치됐다."
 
 모든 수집된 뉴스 기사들은 위와 같은 포맷을 가지고 있습니다. `json.decoder.scanstring` 함수를 이용하여 개행 문자를 포함한 평문으로 디코딩할 수 있습니다.
 
 ## License
-`canrevan`은 Apache-2.0 라이센스가 적용되어 있습니다.
+`cant-revan`은 Apache-2.0 라이센스가 적용되어 있습니다.
