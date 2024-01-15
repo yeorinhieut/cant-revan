@@ -7,7 +7,7 @@ from typing import Callable, Dict, Iterable, List, Optional, TypeVar
 
 from aiohttp import ClientSession, ClientTimeout
 
-import utils as utils
+import canrevan.utils as utils
 
 # Ignore warnings from `aiohttp` module.
 warnings.filterwarnings("ignore", module="aiohttp")

@@ -4,7 +4,7 @@ from typing import List
 
 from bs4 import BeautifulSoup, SoupStrainer
 
-import utils as utils
+import canrevan.utils as utils
 
 
 def extract_article_urls(document: str, _: bool) -> List[str]:
@@ -33,26 +33,26 @@ def extract_article_urls(document: str, _: bool) -> List[str]:
 
 
 def parse_article_content(document: str, include_reporter_name: bool) -> str:
-    strainer = SoupStrainer("div", attrs={"id": "dic_area"})
+    strainer = SoupStrainer("article", attrs={"id": "dic_area"})
     document = BeautifulSoup(document, "lxml", parse_only=strainer)
-    content = document.find("div")
+    article_content = document.find("article", attrs={"id": "dic_area"})
 
     # Skip invalid articles which do not contain news contents.
-    if content is None:
-        raise ValueError("there is no any news article content.")
+    if article_content is None:
+        raise ValueError("There is no news article content.")
 
     # Remove unnecessary tags except `<br>` elements for preserving line-break
     # characters.
-    for child in content.find_all():
+    for child in article_content.find_all():
         if child.name != "br":
             child.clear()
 
-    content = content.get_text(separator="\n").strip()
+    content = article_content.get_text(separator="\n").strip()
     content = "\n".join([line.strip() for line in content.split('\n')])
 
     # Skip the contents which contain too many non-Korean characters.
     if utils.korean_character_ratio(content) < 0.5:
-        raise ValueError("there are too few Korean characters in the content.")
+        raise ValueError("There are too few Korean characters in the content.")
 
     # Normalize the contents by removing abnormal sentences.
     content = "\n".join(
@@ -71,6 +71,6 @@ def parse_article_content(document: str, include_reporter_name: bool) -> str:
 
     # Remove empty string
     if content == "":
-        raise ValueError("there is no news article content.")
+        raise ValueError("There is no news article content.")
 
     return json.encoder.encode_basestring(content)
