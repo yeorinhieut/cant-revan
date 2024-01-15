@@ -2,8 +2,8 @@
 
 
 ## Introduction
-`can't-revan`은 대량의 네이버 뉴스 기사를 수집하는 라이브러리였던 canrevan의 포크 입니다. 간단하게 한국어 뉴스
-데이터셋을 구성하도록 도와줍니다.
+`can't-revan`은 대량의 네이버 뉴스 기사를 수집하는 라이브러리였던 [canrevan](https://github.com/affjljoo3581/canrevan)의 포크 입니다.  
+간단하게 한국어 뉴스 데이터셋을 구성하도록 도와줍니다.
 
 NLP task에서 가장 중요한 부분 중 하나는 데이터셋입니다. 특히 한국어의 경우, 영어에 비해
 수집할 수 있는 데이터가 매우 부족합니다. 특히, [위키피디아](https://ko.wikipedia.org/wiki/%EC%9C%84%ED%82%A4%EB%B0%B1%EA%B3%BC)
