@@ -1,11 +1,9 @@
 import json
 import re
-from typing import List
-
-from bs4 import BeautifulSoup, SoupStrainer
-
 import canrevan.utils as utils
 
+from typing import Dict, List
+from bs4 import BeautifulSoup, SoupStrainer
 
 def extract_article_urls(document: str, _: bool) -> List[str]:
     document = document[document.find('<ul class="type06_headline">'):]
@@ -31,18 +29,41 @@ def extract_article_urls(document: str, _: bool) -> List[str]:
 
     return article_urls
 
+def extract_article_title(document: str) -> str:
+    strainer = SoupStrainer("h2", id="title_area", class_="media_end_head_headline")
+    title_element = BeautifulSoup(document, "lxml", parse_only=strainer).find("h2", id="title_area", class_="media_end_head_headline")
 
-def parse_article_content(document: str, include_reporter_name: bool) -> str:
+    if title_element:
+        # Get the text content of the title element
+        title_text = title_element.get_text(strip=True)
+        return title_text
+
+    return ""
+
+def extract_timestamp(document: str) -> str:
+    strainer = SoupStrainer("span", class_="media_end_head_info_datestamp_time _ARTICLE_DATE_TIME")
+    timestamp_element = BeautifulSoup(document, "lxml", parse_only=strainer).find("span", class_="media_end_head_info_datestamp_time _ARTICLE_DATE_TIME")
+
+    if timestamp_element:
+        # Get the value of the data-date-time attribute
+        timestamp_str = timestamp_element.get("data-date-time")
+        if timestamp_str:
+            # Extract YYYYMMDD format from "2024-01-15 20:28:01"
+            timestamp = timestamp_str.split(" ")[0].replace("-", "")
+            return timestamp
+
+    return ""
+
+def parse_article_content(document: str, include_reporter_name: bool) -> Dict[str, str]:
+    original_document = document  # Save the original document before any manipulation
+
     strainer = SoupStrainer("article", attrs={"id": "dic_area"})
     document = BeautifulSoup(document, "lxml", parse_only=strainer)
     article_content = document.find("article", attrs={"id": "dic_area"})
 
-    # Skip invalid articles which do not contain news contents.
     if article_content is None:
         raise ValueError("There is no news article content.")
 
-    # Remove unnecessary tags except `<br>` elements for preserving line-break
-    # characters.
     for child in article_content.find_all():
         if child.name != "br":
             child.clear()
@@ -50,11 +71,9 @@ def parse_article_content(document: str, include_reporter_name: bool) -> str:
     content = article_content.get_text(separator="\n").strip()
     content = "\n".join([line.strip() for line in content.split('\n')])
 
-    # Skip the contents which contain too many non-Korean characters.
     if utils.korean_character_ratio(content) < 0.5:
         raise ValueError("There are too few Korean characters in the content.")
 
-    # Normalize the contents by removing abnormal sentences.
     content = "\n".join(
         [
             line
@@ -63,14 +82,18 @@ def parse_article_content(document: str, include_reporter_name: bool) -> str:
         ]
     )
 
-    # Remove reporter name part if set.
     if not include_reporter_name:
         splitted = content.split(sep='\n')
         content = "\n".join(splitted[1:])
         content = utils.remove_reporter_name(splitted[0]) + content
 
-    # Remove empty string
     if content == "":
         raise ValueError("There is no news article content.")
 
-    return json.encoder.encode_basestring(content)
+    # Extract article publication time using the original document
+    timestamp = extract_timestamp(original_document)
+
+    # Extract article title using the original document
+    title = extract_article_title(original_document)
+
+    return {"timestamp": timestamp, "title": title, "content": json.encoder.encode_basestring(content)}

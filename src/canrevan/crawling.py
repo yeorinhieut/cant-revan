@@ -1,10 +1,10 @@
-import argparse
 import asyncio
+import json
 import warnings
+
 from asyncio import Semaphore
 from concurrent.futures import Executor, ProcessPoolExecutor
 from typing import Callable, Dict, Iterable, List, Optional, TypeVar
-
 from aiohttp import ClientSession, ClientTimeout
 
 import canrevan.utils as utils
@@ -134,7 +134,9 @@ class Crawler:
                     nonlocal written
                     written += 1
 
-                    fp.write(str(data) + "\n")
+                    # Save data as JSON with both content and timestamp
+                    json.dump(data, fp, ensure_ascii=False)
+                    fp.write("\n")
 
             # Get event loop and set to ignore `SSLError`s from `aiohttp` module.
             loop = asyncio.get_event_loop()

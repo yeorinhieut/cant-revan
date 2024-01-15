@@ -1,7 +1,8 @@
 import argparse
+import tqdm
+
 from typing import List
 
-import tqdm
 
 import canrevan.parsing as parsing
 import canrevan.utils as utils
@@ -72,7 +73,7 @@ def _create_argument_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--output_path", default="첫줄포함.txt", help="output file path"
+        "--output_path", default="asdf.json", help="output file path"
     )
     parser.add_argument(
         "--category",
