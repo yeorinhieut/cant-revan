@@ -42,7 +42,6 @@ NLP task에서 가장 중요한 부분 중 하나는 데이터셋입니다. 특�
 ## Installation
 
 ### From source
-혹은, 원격 저장소에서 복제하여 소스코드에서 직접 설치할 수 있습니다.
 ```console
 $ git clone https://github.com/yeorinhieut/cant-revan.git
 $ cd cant-revan
